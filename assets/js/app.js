@@ -34,11 +34,11 @@ function playSound(soundName) {
 }
 
 // Function to check if the user is on a mobile device
-function isMobileDevice() {
-	return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-		navigator.userAgent
-	);
-}
+// function isMobileDevice() {
+// 	return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+// 		navigator.userAgent
+// 	);
+// }
 
 // Start game by pressing Enter key.
 document.addEventListener("keypress", function (event) {
@@ -50,14 +50,21 @@ document.addEventListener("keypress", function (event) {
 	}
 });
 
-if (isMobileDevice()) {
-	document.addEventListener("click", function () {
-		if (started == false) {
-			started = true;
-			setTimeout(levelUp, 300);
-		}
-	});
-}
+// if (isMobileDevice()) {
+// 	document.addEventListener("click", function () {
+// 		if (started == false) {
+// 			started = true;
+// 			setTimeout(levelUp, 300);
+// 		}
+// 	});
+// }
+
+document.addEventListener("click", function () {
+	if (started == false) {
+		started = true;
+		setTimeout(levelUp, 300);
+	}
+});
 
 // Flashing button
 function btnFlash(btn) {
