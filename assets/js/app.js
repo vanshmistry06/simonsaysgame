@@ -12,6 +12,7 @@ const gameOver = new Audio("assets/sounds/over.mp3");
 // Setting up level configs
 let started = false;
 let level = 0;
+let gameOverState = false; // Flag to check if game is over
 
 // Function to Play Sound
 function playSound(soundName) {
@@ -19,15 +20,12 @@ function playSound(soundName) {
 		case "userSelect":
 			userSelect.play();
 			break;
-
 		case "systemSelect":
 			systemSelect.play();
 			break;
-
 		case "gameOver":
 			gameOver.play();
 			break;
-
 		default:
 			break;
 	}
@@ -42,7 +40,8 @@ function isMobileDevice() {
 
 // Start game by pressing Enter key.
 document.addEventListener("keypress", function (event) {
-	if (event.key == "Enter") {
+	if (event.key == "Enter" && !gameOverState) {
+		// Check if the game is not over
 		if (started == false) {
 			started = true;
 			setTimeout(levelUp, 300);
@@ -50,9 +49,11 @@ document.addEventListener("keypress", function (event) {
 	}
 });
 
+// Add click event for mobile devices only if the game is not over
 if (isMobileDevice()) {
 	document.addEventListener("click", function () {
-		if (started == false) {
+		if (started == false && !gameOverState) {
+			// Ensure game hasn't ended
 			started = true;
 			setTimeout(levelUp, 300);
 		}
@@ -87,7 +88,7 @@ function randomBtnIndex() {
 	return randomSelectedButton;
 }
 
-// Checking user sequence wit game sequence
+// Checking user sequence with game sequence
 function checkSeq(levelIndex) {
 	if (userSeq[levelIndex] === gameSeq[levelIndex]) {
 		if (userSeq.length == gameSeq.length) {
@@ -96,9 +97,12 @@ function checkSeq(levelIndex) {
 	} else {
 		h3.innerHTML = `Game over! Your score was <b>${
 			level - 1
-		}</b> <br> Press "Enter" key to restart the game.`;
+		}</b> <br><br> Restarting game in 3 second...`;
 		playSound("gameOver");
-		resetGame();
+		gameOverState = true; // Set game over state
+
+		// Add a delay before resetting the game to allow the user to see the score
+		setTimeout(resetGame, 3000); // Reset after 3 seconds
 	}
 }
 
@@ -127,4 +131,6 @@ function resetGame() {
 	gameSeq = [];
 	userSeq = [];
 	level = 0;
+	gameOverState = false; // Reset the game over state
+	h3.innerHTML = `Press "Enter" key or click to start the game.`;
 }
