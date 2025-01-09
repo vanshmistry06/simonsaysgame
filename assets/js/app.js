@@ -100,7 +100,7 @@ function checkSeq(levelIndex) {
 		gameOverState = true; // Set game over state
 
 		// Start countdown before resetting the game
-		countdownBeforeReset(3);
+		countdownBeforeReset(4);
 	}
 }
 
@@ -116,7 +116,7 @@ function countdownBeforeReset(seconds) {
 			clearInterval(countdownInterval);
 			resetGame(); // Reset after countdown ends
 		}
-	}, 1000);
+	}, 2000);
 }
 
 // Button Press
