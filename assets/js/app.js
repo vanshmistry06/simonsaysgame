@@ -95,15 +95,28 @@ function checkSeq(levelIndex) {
 			setTimeout(levelUp, 1300);
 		}
 	} else {
-		h3.innerHTML = `Game over! Your score was <b>${
-			level - 1
-		}</b> <br><br> Restarting game in 3 second...`;
+		h3.innerHTML = `Game over! Your score was <b>${level - 1}</b>`;
 		playSound("gameOver");
 		gameOverState = true; // Set game over state
 
-		// Add a delay before resetting the game to allow the user to see the score
-		setTimeout(resetGame, 3000); // Reset after 3 seconds
+		// Start countdown before resetting the game
+		countdownBeforeReset(3);
 	}
+}
+
+// Countdown logic before resetting the game
+function countdownBeforeReset(seconds) {
+	let countdown = seconds;
+
+	let countdownInterval = setInterval(() => {
+		if (countdown > 0) {
+			h3.innerHTML = `Restarting game in ${countdown}...`;
+			countdown--;
+		} else {
+			clearInterval(countdownInterval);
+			resetGame(); // Reset after countdown ends
+		}
+	}, 1000);
 }
 
 // Button Press
