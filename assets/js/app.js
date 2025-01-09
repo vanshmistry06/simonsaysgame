@@ -13,7 +13,7 @@ const gameOver = new Audio("assets/sounds/over.mp3");
 let started = false;
 let level = 0;
 
-// Play Sound
+// Function to Play Sound
 function playSound(soundName) {
 	switch (soundName) {
 		case "userSelect":
@@ -33,6 +33,13 @@ function playSound(soundName) {
 	}
 }
 
+// Function to check if the user is on a mobile device
+function isMobileDevice() {
+	return /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+		navigator.userAgent
+	);
+}
+
 // Start game by pressing Enter key.
 document.addEventListener("keypress", function (event) {
 	if (event.key == "Enter") {
@@ -42,6 +49,15 @@ document.addEventListener("keypress", function (event) {
 		}
 	}
 });
+
+if (isMobileDevice()) {
+	document.addEventListener("click", function () {
+		if (started == false) {
+			started = true;
+			setTimeout(levelUp, 300);
+		}
+	});
+}
 
 // Flashing button
 function btnFlash(btn) {
